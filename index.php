@@ -20,7 +20,8 @@ if (!empty($url[0])) {
   $controllerFile = "controllers/$controllerName.php";
 }
 else {
-    $controllerFile = "";
+    require_once 'view/home.php';
+    exit;
 }
 
 if (file_exists($controllerFile)) {

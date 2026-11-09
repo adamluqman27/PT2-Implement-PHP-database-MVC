@@ -7,7 +7,7 @@ class Database {
     public function __construct() {
         try {
             // Create the PDO connection
-            $this->connection = new PDO("mysql:host=lrgs.ftsm.ukm.my;dbname=a123456", "a123456", "a123456");
+            $this->connection = new PDO("mysql:host=lrgs.ftsm.ukm.my;dbname=a203267", "a203267", "largepinksheep");
             $this->connection->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
         } catch (PDOException $e) {
             // Handle connection errors gracefully

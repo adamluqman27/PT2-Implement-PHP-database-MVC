@@ -42,8 +42,8 @@ class ProductModel {
     $stmt->bindValue(':product_name',      $product_name,      PDO::PARAM_STR);
     $stmt->bindValue(':product_price',     $product_price);
     $stmt->bindValue(':product_brand',     $product_brand,     PDO::PARAM_STR);
-    $stmt->bindValue(':product_condition', $product_size, PDO::PARAM_STR);
-    $stmt->bindValue(':product_year',      $product_scent,      PDO::PARAM_STR);
+    $stmt->bindValue(':product_size', $product_size, PDO::PARAM_STR);
+    $stmt->bindValue(':product_scent',      $product_scent,      PDO::PARAM_STR);
     $stmt->bindValue(':product_quantity',  $product_quantity,  PDO::PARAM_INT);
     $stmt->bindValue(':product_image',     $product_image,     PDO::PARAM_STR);
  

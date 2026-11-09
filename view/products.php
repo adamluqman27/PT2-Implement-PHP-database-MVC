@@ -119,7 +119,7 @@ ob_start();
                 <small class="text-muted">View and manage all products in the inventory</small>
             </div>
             <div class="col-auto">
-                <span class="badge bg-success">Total: 1 items</span>
+                <span class="badge bg-success">Total: <?php echo count($products); ?> items</span>
             </div>
         </div>
 
@@ -137,26 +137,31 @@ ob_start();
                     </tr>
                 </thead>
                 <tbody>
-                    <tr>
-                        <td>POO1</td>
-                        <td>Road Bike</td>
-                        <td>$1,200.00</td>
-                        <td>Cervelo</td>
-                        <td>
-                            <a href="#" class="btn btn-sm btn-warning">
-                                <i class="bi bi-pencil"></i>
-                            </a>
-                            <button type="button" class="btn btn-sm btn-info text-white">
-                                <i class="bi bi-image"></i>
-                            </button>
-                            <a href="#" class="btn btn-sm btn-danger">
-                                <i class="bi bi-trash"></i>
-                            </a>
-                        </td>
-                    </tr>
-                    <tr>
-                        <td colspan="5" class="text-center">No products found</td>
-                    </tr>
+                    <?php if (!empty($products)): ?>
+                        <?php foreach ($products as $product): ?>
+                            <tr>
+                                <td><?php echo htmlspecialchars($product['fld_product_num']); ?></td>
+                                <td><?php echo htmlspecialchars($product['fld_product_name']); ?></td>
+                                <td>$<?php echo number_format((float)$product['fld_product_price'], 2); ?></td>
+                                <td><?php echo htmlspecialchars($product['fld_product_brand']); ?></td>
+                                <td>
+                                    <a href="#" class="btn btn-sm btn-warning">
+                                         <i class="bi bi-pencil"></i>
+                                    </a>
+                                    <button type="button" class="btn btn-sm btn-info text-white">
+                                        <i class="bi bi-image"></i>
+                                    </button>
+                                    <a href="#" class="btn btn-sm btn-danger">
+                                        <i class="bi bi-trash"></i>
+                                    </a>
+                                </td>
+                             </tr>
+                        <?php endforeach; ?>
+                    <?php else: ?>
+                        <tr>
+                            <td colspan="5" class="text-center">No products found</td>
+                        </tr>
+                    <?php endif; ?>
                 </tbody>
             </table>
         </div>

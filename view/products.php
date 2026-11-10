@@ -16,7 +16,7 @@ ob_start();
             <div class="col">
                 <h5 class="mb-0">
                     <i class="bi bi-pencil-square text-primary me-2"></i>
-                    Product Form
+                    <?php echo isset($aproduct) ? 'Edit Product' : 'Product Form'; ?>
                 </h5>
                 <small class="text-muted">Fill in the details of a product</small>
             </div>
@@ -27,78 +27,90 @@ ob_start();
 
         <hr>
 
-        <form action="" method="post" class="needs-validation" novalidate>
+        <!-- <form action="" method="post" class="needs-validation" novalidate> -->
+        <!-- <form action="<?= BASE_URL ?>productcontroller/save" method="post" class="needs-validation" novalidate> -->
+        <form action="<?= BASE_URL ?>productcontroller/<?= isset($aproduct) ? 'update' : 'save' ?>" method="post" class="needs-validation" novalidate>
             <div class="row g-3">
                 <div class="col-md-3">
                     <label for="pid" class="form-label">Product ID <span class="text-danger" aria-hidden="true">*</span></label>
-                    <input name="product_num" id="pid" type="text" class="form-control" placeholder="Enter Product ID" value="" required>
+                    <input name="product_num" id="pid" type="text" class="form-control" placeholder="Enter Product ID" value="<?php echo isset($aproduct) ? htmlspecialchars($aproduct['fld_product_num']) : ''; ?>" required>
                 </div>
                 <div class="col-md-3">
                     <label for="name" class="form-label">Name <span class="text-danger" aria-hidden="true">*</span></label>
-                    <input name="product_name" id="name" type="text" class="form-control" placeholder="Enter Product Name" value="" required>
+                    <input name="product_name" id="name" type="text" class="form-control" placeholder="Enter Product Name" value="<?php echo isset($aproduct) ? htmlspecialchars($aproduct['fld_product_name']) : ''; ?>" required>
                 </div>
                 <div class="col-md-3">
                     <label for="price" class="form-label">Price <span class="text-danger" aria-hidden="true">*</span></label>
-                    <input name="product_price" id="price" type="number" class="form-control" placeholder="Enter Price" value="" required min="0" step="0.01">
+                    <input name="product_price" id="price" type="number" class="form-control" placeholder="Enter Price" value="<?php echo isset($aproduct) ? htmlspecialchars($aproduct['fld_product_price']) : ''; ?>" required min="0" step="0.01">
                 </div>
+
                 <div class="col-md-3">
                     <label for="brand" class="form-label">Brand <span class="text-danger" arial-hidden="true">*</span></label>
+                    <?php
+                    $brands = ['Scmidth', 'Hygr'];
+                    $selectedBrand = $aproduct['fld_product_brand'] ?? '';
+                    ?>
                     <select name="product_brand" id="brand" class="form-select" required>
                         <option value="">Select Brand</option>
-                        <option value="Scmidth">Scmidth</option>
-                        <option value="Hygr">Hygr</option>
+                        <?php foreach ($brands as $brand): ?>
+                            <option value="<?= htmlspecialchars($brand) ?>" <?= $selectedBrand === $brand ? 'selected' : '' ?>>
+                                <?= htmlspecialchars($brand) ?>
+                            </option>
+                        <?php endforeach; ?>
                     </select>
                 </div>
                 
                 <div class="col-md-3">
                     <label for="product_size" class="form-label">Size <span class="text-danger" aria-hidden="true"></span></label>
+                    <?php
+                    $sizes = ['25g']; // Boleh tambah lain-lain saiz kalau ada
+                    $selectedSize = $aproduct['fld_product_size'] ?? '';
+                    ?>
                     <select name="product_size" id="product_size" class="form-select" required>
                         <option value="">Select Size</option>
-                        <option value="25g">25g</option>
+                        <?php foreach ($sizes as $size): ?>
+                            <option value="<?= htmlspecialchars($size) ?>" <?= $selectedSize === $size ? 'selected' : '' ?>>
+                                <?= htmlspecialchars($size) ?>
+                            </option>
+                        <?php endforeach; ?>
                     </select>
                 </div>
 
                 <div class="col-md-3">
-                    <label for="year" class="form-label">Scent <span class="text-danger" aria-hidden="true">*</span></label>
-                    <select name="product_scent" id="year" class="form-select" required>
+                    <label for="scent" class="form-label">Scent <span class="text-danger" aria-hidden="true">*</span></label>
+                    <?php
+                    $scents = ['BAYU', 'LIME', 'PEAR', 'CHARCOAL', 'CITRUS', 'KOPI', 'CREME', 'CUCUMBER', 'SPICE', 'APRICOT', 'LAVENDER', 'LAVENDER SAGE', 'TEH', 'ROSE', 'ROSE VANILLA', 'TEA TREE', 'WOODY', 'YLANG YLANG', 'ZASMINE', 'ZEN'];
+                    $selectedScent = $aproduct['fld_product_scent'] ?? '';
+                    ?>
+                    <select name="product_scent" id="scent" class="form-select" required>
                         <option value="">Select Scent</option>
-                        <option value="BAYU">BAYU</option>
-                        <option value="LIME">LIME</option>
-                        <option value="PEAR">PEAR</option>
-                        <option value="CHARCOAL">CHARCOAL</option>
-                        <option value="CITRUS">CITRUS</option>
-                        <option value="KOPI">KOPI</option>
-                        <option value="CREME">CREME</option>
-                        <option value="CUCUMEBR">CUCUMBER</option>
-                        <option value="SPICE">SPICE</option>
-                        <option value="APRICOT">APRICOT</option>
-                        <option value="LAVENDER">LAVENDER</option>
-                        <option value="LAVENDER SAGE">LAVENDER SAGE</option>
-                        <option value="TEH">TEH</option>
-                        <option value="ROSE">ROSE</option>
-                        <option value="ROSE VANILLA">ROSE VANILLA</option>
-                        <option value="TEA TREE">TEA TREE</option>
-                        <option value="WOODY">WOODY</option>
-                        <option value="YLANG YLANG">YLANG YLANG</option>
-                        <option value="ZASMINE">ZASMINE</option>
-                        <option value="ZEN">ZEN</option>
+                        <?php foreach ($scents as $scent): ?>
+                            <option value="<?= htmlspecialchars($scent) ?>" <?= $selectedScent === $scent ? 'selected' : '' ?>>
+                                <?= htmlspecialchars($scent) ?>
+                            </option>
+                        <?php endforeach; ?>
                     </select>
                 </div>
 
                 <div class="col-md-3">
                     <label for="quantity" class="form-label">Quantity <span class="text-danger" aria-hidden="true">*</span></label>
-                    <input name="product_quantity" id="quantity" type="number" class="form-control" placeholder="Enter Quantity" value="" required min="0">
+                    <input name="product_quantity" id="quantity" type="number" class="form-control" placeholder="Enter Quantity" value="<?php echo isset($aproduct) ? htmlspecialchars($aproduct['fld_product_quantity']) : ''; ?>" required min="0">
                 </div>
                 <div class="col-md-3">
                     <label for="product_image" class="form-label">Image</label>
-                    <input name="product_image" id="product_image" type="text" class="form-control" placeholder="Enter image filename" value="">
+                    <input name="product_image" id="product_image" type="text" class="form-control" placeholder="Enter image filename" value="<?php echo isset($aproduct) ? htmlspecialchars($aproduct['fld_product_image']) : ''; ?>">
                 </div>
             </div>
+            
+                <?php if (isset($aproduct)): ?>
+                    <input type="hidden" name="original_product_num" value="<?php echo htmlspecialchars($aproduct['fld_product_num']); ?>">
+                <?php endif; ?>
+
                 <hr class="mt-4 mb-3">
 
                 <div>
-                    <button type="submit" name="create" class="btn btn-primary">
-                        <i class="bi bi-save me-1"></i>Create
+                    <button type="submit" name="<?= isset($aproduct) ? 'update' : 'create' ?>" class="btn btn-primary">
+                        <i class="bi bi-save me-1"></i><?= isset($aproduct) ? 'Update' : 'Create' ?>
                     </button>
                     <button type="reset" class="btn btn-secondary">
                         <i class="bi bi-arrow-counterclockwise me-1"></i>Clear
@@ -145,13 +157,13 @@ ob_start();
                                 <td>$<?php echo number_format((float)$product['fld_product_price'], 2); ?></td>
                                 <td><?php echo htmlspecialchars($product['fld_product_brand']); ?></td>
                                 <td>
-                                    <a href="#" class="btn btn-sm btn-warning">
-                                         <i class="bi bi-pencil"></i>
+                                    <a href="<?= BASE_URL ?>productcontroller/edit/<?= htmlspecialchars($product['fld_product_num']); ?>" class="btn btn-sm btn-warning">
+                                        <i class="bi bi-pencil"></i>
                                     </a>
                                     <button type="button" class="btn btn-sm btn-info text-white">
                                         <i class="bi bi-image"></i>
                                     </button>
-                                    <a href="#" class="btn btn-sm btn-danger">
+                                    <a href="<?= BASE_URL ?>productcontroller/delete/<?= $product['fld_product_num'] ?>" class="btn btn-sm btn-danger" onclick="return confirm('Are you sure to delete?');">
                                         <i class="bi bi-trash"></i>
                                     </a>
                                 </td>
